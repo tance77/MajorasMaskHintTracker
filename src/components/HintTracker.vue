@@ -644,11 +644,13 @@
           this.regionHints[this.selectedLocation.region] = [{
             locationName: this.selectedLocation.name,
             item: this.selectedItem,
+            id: Math.random().toString(36).substring(2) + Date.now().toString(36),
           }];
         } else {
           this.regionHints[this.selectedLocation.region].push({
             locationName: this.selectedLocation.name,
             item: this.selectedItem,
+            id: Math.random().toString(36).substring(2) + Date.now().toString(36),
           });
         }
 
@@ -679,13 +681,14 @@
       },
       removeHint(region, hint) {
         for (let i in this.regionHints[region]) {
-          if (Object.prototype.hasOwnProperty.call(this.regionHints[region], i) && this.regionHints[region][i].item === hint.item) {
+          if (Object.prototype.hasOwnProperty.call(this.regionHints[region], i) && this.regionHints[region][i].id === hint.id) {
             this.regionHints[region].splice(i, 1);
           }
         }
         if (this.regionHints[region].length === 0) {
-          this.$delete(this.regionHints, region);
+          delete this.regionHints[region];
         }
+        this.regionHints = JSON.parse(JSON.stringify(this.regionHints))
         localStorage.setItem("regionHints", JSON.stringify(this.regionHints));
       },
       splitRegionName(region){
