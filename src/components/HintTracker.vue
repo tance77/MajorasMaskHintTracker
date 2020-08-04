@@ -13,18 +13,20 @@
         Add
       </button>
     </div>
-    <div class="text-xl text-gray-300 my-4 border-b border-gray-500">
+    <div class="text-xl text-gray-300 my-4 border-b border-gray-500 tracking-wide">
       Known Hints
     </div>
-    <ul v-show="regionHints" class="mt-4">
+    <ul v-show="Object.keys(regionHints).length > 0" class="mt-4">
       <li v-for="(hints, region) in regionHints" :key="region" class="mb-2">
-        <span class="text-lg text-gray-400">{{ splitRegionName(region) }}</span>
+        <span class="text-lg text-gray-400 tracking-wide">{{ splitRegionName(region) }}</span>
         <ul class="mt-2">
-          <li v-for="(hint, index) in hints" :key="`${hint}-${index}`" class="flex items-center text-gray-300 ml-4">
-            <p class="mr-2">
-              <span>{{ hint.locationName }}</span> is <span>{{ hint.item }}</span>
-            </p>
-            <button class="flex items-center pr-3 text-gray-400 text-red-400 rounded-tr-lg hover:text-red-600 focus:outline-none" @click="removeHint(region, hint)">
+          <li v-for="(hint, index) in hints" :key="`${hint}-${index}`" class="flex items-center text-gray-300 ml-4 font-thin">
+            <span class="col-span-1">{{ hint.locationName }}</span>
+            <div class="flex items-center mx-2 text-indigo-500">
+              <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 inline-flex"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <span class="col-span-1 font-semibold mr-2">{{ hint.item }}</span>
+            <button class="flex items-center text-gray-400 text-red-400 hover:text-red-600 focus:outline-none" @click="removeHint(region, hint)">
               <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5">
                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
               </svg>
@@ -33,7 +35,7 @@
         </ul>
       </li>
     </ul>
-    <div v-show="!regionHints" class="text-sm text-gray-400">
+    <div v-show="Object.keys(regionHints).length < 1" class="text-sm text-gray-400">
       Add a hint above to begin...
     </div>
 
