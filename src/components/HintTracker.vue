@@ -684,6 +684,7 @@
         if (this.regionHints[region].length === 0) {
           this.$delete(this.regionHints, region);
         }
+        localStorage.setItem("regionHints", JSON.stringify(this.regionHints));
       },
       splitRegionName(region){
         return region.split(/(?=[A-Z])/).join(" ");
