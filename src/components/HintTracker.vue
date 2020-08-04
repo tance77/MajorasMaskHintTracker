@@ -2,10 +2,10 @@
     <div class="container mx-auto mt-6 p-2">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div class="grid-cols-1">
-                <SearchLocations :options="locations" label="Location" :selected-location="selectedLocation" @selected="handleLocationSelect"/>
+                <SearchLocations :options="locations" label="Location" placeholder="Cow Grotto" :selected-location="selectedLocation" @selected="handleLocationSelect"/>
             </div>
             <div class="grid-cols-1">
-                <SearchItems :options="items" label="Items" :selected-item="selectedItem" @selected="handleItemSelect"/>
+                <SearchItems :options="items" label="Items" placeholder="Big Bomb Bag" :selected-item="selectedItem" @selected="handleItemSelect"/>
             </div>
         </div>
         <div class="mt-3 text-right">
