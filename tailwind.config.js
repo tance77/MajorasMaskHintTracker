@@ -5,30 +5,20 @@ module.exports = {
         './src/**/*.jsx',
     ],
     theme: {
-        customForms: theme => ({
-            default:{
-                'input, textarea, multiselect, select': {
-                    borderWidth: theme('borderWidth.2'),
-                },
-            },
-            sm: {
-                'input, textarea, multiselect, select': {
-                    fontSize: theme('fontSize.sm'),
-                    borderWidth: theme('borderWidth.2'),
-                    padding: `${theme('spacing.1')} ${theme('spacing.2')}`,
-                },
-                select: {
-                    paddingRight: `${theme('spacing.4')}`,
-                },
-                'checkbox, radio': {
-                    width: theme('spacing.3'),
-                    height: theme('spacing.3'),
-                },
-            },
-        }),
+
+    },
+    variants: {
+        cursor: ['responsive', 'disabled'],
+        fontWeight: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+        opacity: ['responsive', 'hover', 'focus', 'disabled'],
+        textColor: ['responsive', 'hover', 'focus', 'disabled', 'group-hover', 'focus-within'],
+        borderColor: ['responsive', 'hover', 'focus', 'disabled', 'last', 'group-hover'],
+        borderWidth: ['responsive', 'last'],
+        backgroundColor: ['responsive', 'hover', 'disabled', 'focus', 'odd', 'even'],
+        placeholderColor: ['responsive', 'focus', 'disabled'],
+        margin: ['responsive', 'hover', 'focus', 'first'],
     },
     plugins: [
         require("@tailwindcss/ui"),
-        require("@tailwindcss/custom-forms"),
     ],
 };

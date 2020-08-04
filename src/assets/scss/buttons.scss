@@ -1,0 +1,6 @@
+.btn {
+  @apply px-4 py-2 capitalize border bg-white;
+  &-blue {
+    @apply bg-blue-500 text-blue-100;
+  }
+}
