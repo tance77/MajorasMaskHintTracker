@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <HintTracker></HintTracker>
+        <HintTracker/>
     </div>
 </template>
 
@@ -16,5 +16,5 @@
 </script>
 
 <style lang="scss">
-    @import "assets/scss/app.scss";
+@import "assets/scss/app.scss";
 </style>

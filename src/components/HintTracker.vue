@@ -1,19 +1,17 @@
 <template>
-    <div class="container mx-auto mt-6">
-        <div class="grid grid-cols-7 gap-2">
-            <div class="col-span-3">
+    <div class="container mx-auto mt-6 p-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div class="grid-cols-1">
                 <SearchLocations :options="locations" label="Location" :selected-location="selectedLocation" @selected="handleLocationSelect"/>
             </div>
-            <div class="col-span-3">
+            <div class="grid-cols-1">
                 <SearchItems :options="items" label="Items" :selected-item="selectedItem" @selected="handleItemSelect"/>
             </div>
-            <div class="col-span-1 text-right mt-7 flex justify-start">
-                <span class="ml-3 rounded-md shadow-sm">
-                    <button type="submit" class="p-3 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-25 disabled:cursor-not-allowed" :disabled="Object.entries(selectedLocation).length === 0 || !selectedItem" @click="addHint">
-                        Add
-                    </button>
-                </span>
-            </div>
+        </div>
+        <div class="mt-3 text-right">
+            <button type="submit" class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-25 disabled:cursor-not-allowed" :disabled="Object.entries(selectedLocation).length === 0 || !selectedItem" @click="addHint">
+                Add
+            </button>
         </div>
         <div class="text-xl text-gray-300 my-4 border-b border-gray-500">
             Known Hints
@@ -40,7 +38,7 @@
         </div>
 
         <div class="mt-8">
-            <button class="w-full md:w-auto bg-red-600 px-4 py-2 text-red-100 rounded-lg hover:bg-red-500" @click="showDeleteModal = true">
+            <button class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" @click="showDeleteModal = true">
                 Reset
             </button>
         </div>
@@ -651,6 +649,17 @@
                         item: this.selectedItem,
                     });
                 }
+
+                this.regionHints[this.selectedLocation.region].sort((a,b)=>{
+                    if(a.locationName < b.locationName){
+                        return -1;
+                    }
+                    if(a.locationName > b.locationName){
+                        return 1;
+                    }
+                    return 0;
+                })
+
                 this.showNotification = true;
                 this.message = `Added New Hint. ${this.selectedLocation.name} is ${this.selectedItem}.`;
                 if (this.timeOutId !== null) {
