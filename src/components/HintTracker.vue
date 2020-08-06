@@ -20,8 +20,8 @@
     <div class="text-xl text-gray-300 my-4 border-b border-gray-500 tracking-wide">
       Known Hints
     </div>
-    <ul v-show="Object.keys(sortedHintRegions).length > 0" class="mt-4">
-      <li v-for="(hints, region) in sortedHintRegions" :key="region" class="mb-2">
+    <ul v-show="Object.keys(regionHints).length > 0" class="mt-4">
+      <li v-for="(hints, region) in regionHints" :key="region" class="mb-2">
         <span class="text-lg text-gray-400 tracking-wide">{{ splitRegionName(region) }}</span>
         <ul class="mt-2">
           <li v-for="(hint, index) in hints" :key="`${hint}-${index}`" class="flex items-center text-gray-300 ml-4 font-thin mb-2">
@@ -42,7 +42,7 @@
         </ul>
       </li>
     </ul>
-    <div v-show="Object.keys(sortedHintRegions).length < 1" class="text-sm text-gray-400">
+    <div v-show="Object.keys(regionHints).length < 1" class="text-sm text-gray-400">
       Add a hint above to begin...
     </div>
 
@@ -623,11 +623,6 @@
         showDeleteModal: false,
       };
     },
-    computed: {
-      sortedHintRegions() {
-        return this.sortObject(this.regionHints)
-      },
-    },
     created() {
       let hints = JSON.parse(localStorage.getItem("regionHints"));
       if (hints) {
@@ -721,6 +716,8 @@
           this.showNotification = false;
           this.message = null;
         }, 3000);
+
+        this.regionHints = this.sortObject(this.regionHints)
 
         this.selectedLocation = {};
         this.selectedItem = {};
