@@ -9,25 +9,32 @@
       </div>
     </div>
     <div class="mt-3 text-right">
-      <button type="submit" class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-25 disabled:cursor-not-allowed" :disabled="Object.entries(selectedLocation).length === 0 || !selectedItem" @click="addHint">
+      <button
+        type="submit"
+        class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-25 disabled:cursor-not-allowed"
+        :disabled="Object.entries(selectedLocation).length === 0 || !selectedItem" @click="addHint"
+      >
         Add
       </button>
     </div>
     <div class="text-xl text-gray-300 my-4 border-b border-gray-500 tracking-wide">
       Known Hints
     </div>
-    <ul v-show="Object.keys(regionHints).length > 0" class="mt-4">
-      <li v-for="(hints, region) in regionHints" :key="region" class="mb-2">
+    <ul v-show="Object.keys(sortedHintRegions).length > 0" class="mt-4">
+      <li v-for="(hints, region) in sortedHintRegions" :key="region" class="mb-2">
         <span class="text-lg text-gray-400 tracking-wide">{{ splitRegionName(region) }}</span>
         <ul class="mt-2">
-          <li v-for="(hint, index) in hints" :key="`${hint}-${index}`" class="flex items-center text-gray-300 ml-4 font-thin">
+          <li v-for="(hint, index) in hints" :key="`${hint}-${index}`" class="flex items-center text-gray-300 ml-4 font-thin mb-2">
             <span class="col-span-1">{{ hint.locationName }}</span>
             <div class="flex items-center mx-2 text-indigo-500">
-              <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 inline-flex"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 inline-flex">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
             </div>
             <span class="col-span-1 font-semibold mr-2">{{ hint.item }}</span>
+            <img v-if="hint.image" :src="assembleImagePath(hint.image)" class="mr-2">
             <button class="flex items-center text-gray-400 text-red-400 hover:text-red-600 focus:outline-none" @click="removeHint(region, hint)">
-              <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5">
+              <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
               </svg>
             </button>
@@ -35,12 +42,15 @@
         </ul>
       </li>
     </ul>
-    <div v-show="Object.keys(regionHints).length < 1" class="text-sm text-gray-400">
+    <div v-show="Object.keys(sortedHintRegions).length < 1" class="text-sm text-gray-400">
       Add a hint above to begin...
     </div>
 
     <div class="mt-8">
-      <button class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" @click="showDeleteModal = true">
+      <button
+        class="p-3 md:px-4 md:py-2 w-full md:w-24 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
+        @click="showDeleteModal = true"
+      >
         Reset
       </button>
     </div>
@@ -61,144 +71,144 @@
     data() {
       return {
         selectedLocation: {},
-        selectedItem: null,
+        selectedItem: {},
         items: [
-          "5 Bombchu",
-          "10 Arrows",
-          "10 Bombchu",
-          "10 Bombs",
-          "10 Deku Nuts",
-          "30 Arrows",
-          "50 Arrows",
-          "Adult Wallet",
-          "All Night Mask",
-          "Big Bomb Bag",
-          "Biggest Bomb Bag",
-          "Blast Mask",
-          "Blue Potion",
-          "Blue Rupee",
-          "Bomb Bag",
-          "Bombchu",
-          "Bombers' Notebook",
-          "Bottle with Chateau Romani",
-          "Bottle with Gold Dust",
-          "Bottle with Milk",
-          "Bottle with Red Potion",
-          "Bottle: Big Poe",
-          "Bottle: Bug",
-          "Bottle: Deku Princess",
-          "Bottle: Fairy",
-          "Bottle: Fish",
-          "Bottle: Hot Spring Water",
-          "Bottle: Mushroom",
-          "Bottle: Poe",
-          "Bottle: Spring Water",
-          "Bottle: Zora Egg",
-          "Bremen Mask",
-          "Bunny Hood",
-          "Captain's Hat",
-          "Chateau Romani",
-          "Circus Leader's Mask",
-          "Clock Town Stray Fairy",
-          "Couple's Mask",
-          "Deku Mask",
-          "Deku Stick",
-          "Don Gero's Mask",
-          "Double Defense",
-          "Elegy of Emptiness",
-          "Empty Bottle",
-          "Epona's Song",
-          "Extended Magic Power",
-          "Fairy",
-          "Fierce Deity's Mask",
-          "Fire Arrow",
-          "Garo's Mask",
-          "Giant Wallet",
-          "Giant's Mask",
-          "Gibdo Mask",
-          "Gilded Sword",
-          "Gold Rupee",
-          "Goron Lullaby",
-          "Goron Mask",
-          "Great Bay Boss Key",
-          "Great Bay Compass",
-          "Great Bay Map",
-          "Great Bay Small Key",
-          "Great Bay Stray Fairy",
-          "Great Fairy's Mask",
-          "Great Fairy's Sword",
-          "Green Potion",
-          "Heart Container",
-          "Hero's Bow",
-          "Hero's Shield",
-          "Hookshot",
-          "Ice Arrow",
-          "Kafei's Mask",
-          "Kamaro's Mask",
-          "Keaton Mask",
-          "Kokiri Sword",
-          "Land Title Deed",
-          "Large Quiver",
-          "Largest Quiver",
-          "Lens of Truth",
-          "Letter to Kafei",
-          "Letter to Mama",
-          "Light Arrow",
-          "Magic Bean",
-          "Magic Power",
-          "Map of Clock Town",
-          "Map of Great Bay",
-          "Map of Romani Ranch",
-          "Map of Snowhead",
-          "Map of Stone Tower",
-          "Map of Woodfall",
-          "Mask of Scents",
-          "Mask of Truth",
-          "Milk",
-          "Mirror Shield",
-          "Moon's Tear",
-          "Mountain Title Deed",
-          "New Wave Bossa Nova",
-          "Oath to Order",
-          "Ocean Skulltula Spirit",
-          "Ocean Title Deed",
-          "Pendant of Memories",
-          "Pictobox",
-          "Piece of Heart",
-          "Postman's Hat",
-          "Powder Keg",
-          "Purple Rupee",
-          "Razor Sword",
-          "Red Potion",
-          "Red Rupee",
-          "Romani's Mask",
-          "Room Key",
-          "Seahorse",
-          "Silver Rupee",
-          "Snowhead Boss Key",
-          "Snowhead Compass",
-          "Snowhead Map",
-          "Snowhead Small Key",
-          "Snowhead Stray Fairy",
-          "Sonata of Awakening",
-          "Song of Healing",
-          "Song of Soaring",
-          "Song of Storms",
-          "Spin Attack",
-          "Stone Mask",
-          "Stone Tower Boss Key",
-          "Stone Tower Compass",
-          "Stone Tower Map",
-          "Stone Tower Small Key",
-          "Stone Tower Stray Fairy",
-          "Swamp Skulltula Spirit",
-          "Swamp Title Deed",
-          "Woodfall Boss Key",
-          "Woodfall Compass",
-          "Woodfall Map",
-          "Woodfall Small Key",
-          "Woodfall Stray Fairy",
-          "Zora Mask",
+          {name: "5 Bombchu", image: "Bombchu.png"},
+          {name: "10 Arrows", image: ""},
+          {name: "10 Bombchu", image: "Bombchu.png"},
+          {name: "10 Bombs", image: "Bomb.png"},
+          {name: "10 Deku Nuts", image: "Deku Nut.png"},
+          {name: "30 Arrows", image: ""},
+          {name: "50 Arrows", image: ""},
+          {name: "Adult Wallet", image: "Adult's Wallet.png"},
+          {name: "All Night Mask", image: "All-Night Mask.png"},
+          {name: "Big Bomb Bag", image: "Bomb Bag 30.png"},
+          {name: "Biggest Bomb Bag", image: "Bomb Bag 40.png"},
+          {name: "Blast Mask", image: "Blast Mask.png"},
+          {name: "Blue Potion", image: ""},
+          {name: "Blue Rupee", image: ""},
+          {name: "Bomb Bag", image: "Bomb Bag 20.png"},
+          {name: "Bombchu", image: "Bombchu.png"},
+          {name: "Bombers' Notebook", image: "Bombers' Notebook.png"},
+          {name: "Bottle with Chateau Romani", image: "Chateau Romani.png"},
+          {name: "Bottle with Gold Dust", image: "Gold Dust.png"},
+          {name: "Bottle with Milk", image: "Milk.png"},
+          {name: "Bottle with Red Potion", image: "Red Potion.png"},
+          {name: "Bottle: Big Poe", image: "Big Poe.png"},
+          {name: "Bottle: Bug", image: ""},
+          {name: "Bottle: Deku Princess", image: ""},
+          {name: "Bottle: Fairy", image: ""},
+          {name: "Bottle: Fish", image: "Fish.png"},
+          {name: "Bottle: Hot Spring Water", image: ""},
+          {name: "Bottle: Mushroom", image: ""},
+          {name: "Bottle: Poe", image: ""},
+          {name: "Bottle: Spring Water", image: ""},
+          {name: "Bottle: Zora Egg", image: ""},
+          {name: "Bremen Mask", image: "Bremen Mask.png"},
+          {name: "Bunny Hood", image: "Bunny Hood.png"},
+          {name: "Captain's Hat", image: "Captain's Hat.png"},
+          {name: "Chateau Romani", image: "Chateau Romani.png"},
+          {name: "Circus Leader's Mask", image: "Circus Leader's Mask.png"},
+          {name: "Clock Town Stray Fairy", image: ""},
+          {name: "Couple's Mask", image: "Couple's Mask.png"},
+          {name: "Deku Mask", image: "Deku Mask.png"},
+          {name: "Deku Stick", image: "Deku Stick.png"},
+          {name: "Don Gero's Mask", image: "Don Gero's Mask.png"},
+          {name: "Double Defense", image: ""},
+          {name: "Elegy of Emptiness", image: "Elegy of Emptiness.png"},
+          {name: "Empty Bottle", image: "Empty Bottle.png"},
+          {name: "Epona's Song", image: "Epona's Song.png"},
+          {name: "Extended Magic Power", image: ""},
+          {name: "Fairy", image: ""},
+          {name: "Fierce Deity's Mask", image: "Fierce Deity's Mask.png"},
+          {name: "Fire Arrow", image: "Fire Arrow.png"},
+          {name: "Garo's Mask", image: "Garo's Mask.png"},
+          {name: "Giant Wallet", image: "Giant's Wallet.png"},
+          {name: "Giant's Mask", image: "Giant's Mask.png"},
+          {name: "Gibdo Mask", image: "Gibdo Mask.png"},
+          {name: "Gilded Sword", image: "Gilded Sword.png"},
+          {name: "Gold Rupee", image: ""},
+          {name: "Goron Lullaby", image: "Goron Lullaby.png"},
+          {name: "Goron Mask", image: "Goron Mask.png"},
+          {name: "Great Bay Boss Key", image: ""},
+          {name: "Great Bay Compass", image: ""},
+          {name: "Great Bay Map", image: ""},
+          {name: "Great Bay Small Key", image: ""},
+          {name: "Great Bay Stray Fairy", image: ""},
+          {name: "Great Fairy's Mask", image: "Great Fairy's Mask.png"},
+          {name: "Great Fairy's Sword", image: "Great Fairy's Sword.png"},
+          {name: "Green Potion", image: ""},
+          {name: "Heart Container", image: ""},
+          {name: "Hero's Bow", image: "Hero's Bow.png"},
+          {name: "Hero's Shield", image: "Hero's Shield.png"},
+          {name: "Hookshot", image: "Hookshot.png"},
+          {name: "Ice Arrow", image: "Ice Arrow.png"},
+          {name: "Kafei's Mask", image: "Kafei's Mask.png"},
+          {name: "Kamaro's Mask", image: "Kamaro's Mask.png"},
+          {name: "Keaton Mask", image: "Keaton Mask.png"},
+          {name: "Kokiri Sword", image: "Kokiri Sword.png"},
+          {name: "Land Title Deed", image: "Land Title Deed.png"},
+          {name: "Large Quiver", image: "Hero's Bow 40.png"},
+          {name: "Largest Quiver", image: "Hero's Bow 50.png"},
+          {name: "Lens of Truth", image: "Lens of Truth.png"},
+          {name: "Letter to Kafei", image: "Letter to Kafei.png"},
+          {name: "Letter to Mama", image: ""},
+          {name: "Light Arrow", image: "Light Arrow.png"},
+          {name: "Magic Bean", image: "Magic Beans.png"},
+          {name: "Magic Power", image: ""},
+          {name: "Map of Clock Town", image: ""},
+          {name: "Map of Great Bay", image: ""},
+          {name: "Map of Romani Ranch", image: ""},
+          {name: "Map of Snowhead", image: ""},
+          {name: "Map of Stone Tower", image: ""},
+          {name: "Map of Woodfall", image: ""},
+          {name: "Mask of Scents", image: ""},
+          {name: "Mask of Truth", image: ""},
+          {name: "Milk", image: "Milk.png"},
+          {name: "Mirror Shield", image: "Mirror Shield.png"},
+          {name: "Moon's Tear", image: "Moon's Tear.png"},
+          {name: "Mountain Title Deed", image: "Mountain Title Deed.png"},
+          {name: "New Wave Bossa Nova", image: "New Wave Bossa Nova.png"},
+          {name: "Oath to Order", image: "Oath to Order.png"},
+          {name: "Ocean Skulltula Spirit", image: ""},
+          {name: "Ocean Title Deed", image: "Ocean Title Deed.png"},
+          {name: "Pendant of Memories", image: "Pendant of Memories.png"},
+          {name: "Pictobox", image: "Pictograph Box.png"},
+          {name: "Piece of Heart", image: ""},
+          {name: "Postman's Hat", image: "Postman's Hat.png"},
+          {name: "Powder Keg", image: "Powder Keg.png"},
+          {name: "Purple Rupee", image: ""},
+          {name: "Razor Sword", image: "Razor Sword.png"},
+          {name: "Red Potion", image: "Red Potion.png"},
+          {name: "Red Rupee", image: ""},
+          {name: "Romani's Mask", image: "Romani's Mask.png"},
+          {name: "Room Key", image: "Room Key.png"},
+          {name: "Seahorse", image: ""},
+          {name: "Silver Rupee", image: ""},
+          {name: "Snowhead Boss Key", image: ""},
+          {name: "Snowhead Compass", image: ""},
+          {name: "Snowhead Map", image: ""},
+          {name: "Snowhead Small Key", image: ""},
+          {name: "Snowhead Stray Fairy", image: ""},
+          {name: "Sonata of Awakening", image: "Sonata of Awakening.png"},
+          {name: "Song of Healing", image: "Song of Healing.png"},
+          {name: "Song of Soaring", image: "Song of Soaring.png"},
+          {name: "Song of Storms", image: "Song of Storms.png"},
+          {name: "Spin Attack", image: ""},
+          {name: "Stone Mask", image: "Stone Mask.png"},
+          {name: "Stone Tower Boss Key", image: ""},
+          {name: "Stone Tower Compass", image: ""},
+          {name: "Stone Tower Map", image: ""},
+          {name: "Stone Tower Small Key", image: ""},
+          {name: "Stone Tower Stray Fairy", image: ""},
+          {name: "Swamp Skulltula Spirit", image: ""},
+          {name: "Swamp Title Deed", image: "Swamp Title Deed.png"},
+          {name: "Woodfall Boss Key", image: ""},
+          {name: "Woodfall Compass", image: ""},
+          {name: "Woodfall Map", image: ""},
+          {name: "Woodfall Small Key", image: ""},
+          {name: "Woodfall Stray Fairy", image: ""},
+          {name: "Zora Mask", image: "Zora Mask.png"},
         ],
         locations: [
           {name: "Aliens Defense", region: "RomaniRanch"},
@@ -613,13 +623,48 @@
         showDeleteModal: false,
       };
     },
+    computed: {
+      sortedHintRegions() {
+        return this.sortObject(this.regionHints)
+      },
+    },
     created() {
       let hints = JSON.parse(localStorage.getItem("regionHints"));
       if (hints) {
         this.regionHints = hints;
       }
     },
+    // mounted() {
+    //   this.regionHints = {};
+    //   this.items.forEach(item => {
+    //     this.selectedItem = item;
+    //     this.selectedLocation = this.locations[Math.floor(Math.random() * this.locations.length)];
+    //     this.addHint();
+    //   });
+    // },
     methods: {
+      sortObject(unordered, sortArrays = false) {
+        if (!unordered || typeof unordered !== 'object') {
+          return unordered;
+        }
+
+        if (Array.isArray(unordered)) {
+          const newArr = unordered.map((item) => this.sortObject(item, sortArrays));
+          if (sortArrays) {
+            newArr.sort();
+          }
+          return newArr;
+        }
+
+        const ordered = {};
+        Object.keys(unordered).sort().forEach( (key)=> {
+          ordered[key] = this.sortObject(unordered[key], sortArrays);
+        });
+        return ordered;
+      },
+      assembleImagePath(imageName) {
+        return "/images/" + imageName;
+      },
       handleLocationSelect(location) {
         if (Object.entries(location).length === 0) {
           this.selectedLocation = {};
@@ -629,7 +674,7 @@
       },
       handleItemSelect(item) {
         if (!item) {
-          this.selectedItem = null;
+          this.selectedItem = {};
           return;
         }
         this.selectedItem = item;
@@ -643,29 +688,31 @@
         if (!this.regionHints[this.selectedLocation.region]) {
           this.regionHints[this.selectedLocation.region] = [{
             locationName: this.selectedLocation.name,
-            item: this.selectedItem,
+            item: this.selectedItem.name,
+            image: this.selectedItem.image,
             id: Math.random().toString(36).substring(2) + Date.now().toString(36),
           }];
         } else {
           this.regionHints[this.selectedLocation.region].push({
             locationName: this.selectedLocation.name,
-            item: this.selectedItem,
+            item: this.selectedItem.name,
+            image: this.selectedItem.image,
             id: Math.random().toString(36).substring(2) + Date.now().toString(36),
           });
         }
 
-        this.regionHints[this.selectedLocation.region].sort((a,b)=>{
-          if(a.locationName < b.locationName){
+        this.regionHints[this.selectedLocation.region].sort((a, b) => {
+          if (a.locationName < b.locationName) {
             return -1;
           }
-          if(a.locationName > b.locationName){
+          if (a.locationName > b.locationName) {
             return 1;
           }
           return 0;
-        })
+        });
 
         this.showNotification = true;
-        this.message = `Added New Hint. ${this.selectedLocation.name} is ${this.selectedItem}.`;
+        this.message = `Added New Hint. ${this.selectedLocation.name} is ${this.selectedItem.name}.`;
         if (this.timeOutId !== null) {
           clearTimeout(this.timeOutId);
           this.timeOutId = null;
@@ -676,7 +723,7 @@
         }, 3000);
 
         this.selectedLocation = {};
-        this.selectedItem = null;
+        this.selectedItem = {};
         localStorage.setItem("regionHints", JSON.stringify(this.regionHints));
       },
       removeHint(region, hint) {
@@ -688,10 +735,10 @@
         if (this.regionHints[region].length === 0) {
           delete this.regionHints[region];
         }
-        this.regionHints = JSON.parse(JSON.stringify(this.regionHints))
+        this.regionHints = JSON.parse(JSON.stringify(this.regionHints));
         localStorage.setItem("regionHints", JSON.stringify(this.regionHints));
       },
-      splitRegionName(region){
+      splitRegionName(region) {
         return region.split(/(?=[A-Z])/).join(" ");
       },
       resetRegionHints() {
