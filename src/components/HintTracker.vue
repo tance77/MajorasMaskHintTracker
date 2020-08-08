@@ -32,40 +32,40 @@
         </div>
       </div>
     </div>
-    <!--    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">-->
-    <!--      <div v-for="region in regions" :key="region" class="flex items-center col-span-1">-->
-    <!--        <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>-->
-    <!--        <label class="pr-2"><input-->
-    <!--          v-model="selectedWayOfHero" :value="region" class="text-teal-400 bg-teal-700 border border-teal-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedWayOfHero.includes(region)}"-->
-    <!--          @click="toggleWoth(region, true)"-->
-    <!--        ></label>-->
-    <!--        <label><input-->
-    <!--          v-model="selectedFoolish" :value="region" class="text-purple-400 bg-purple-800 border border-purple-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedFoolish.includes(region)}"-->
-    <!--          @click="toggleWoth(region, false)"-->
-    <!--        ></label>-->
-    <!--      </div>-->
-    <!--    </div>-->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div v-for="region in regions" :key="region" class="flex items-center col-span-1">
+        <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>
+        <label class="pr-2"><input
+          v-model="selectedWayOfHero" :value="region" class="text-teal-400 bg-teal-700 border border-teal-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedWayOfHero.includes(region)}"
+          @click="toggleWoth(region, true)"
+        ></label>
+        <label><input
+          v-model="selectedFoolish" :value="region" class="text-purple-400 bg-purple-800 border border-purple-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedFoolish.includes(region)}"
+          @click="toggleWoth(region, false)"
+        ></label>
+      </div>
+    </div>
     <div class="my-4 text-xl tracking-wide text-gray-300 border-b border-gray-500">
       Known Hints
     </div>
-    <div v-show="sortedWayOfTheHero.length > 0 || sortedFoolish.length > 0" class="grid grid-cols-2 mt-4 gap-4">
-      <div class="col-span-1">
-        <span class="text-lg tracking-wide text-teal-400">Way of the Hero</span>
-        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">
-          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 font-thin text-gray-300">
-            {{ splitRegionName(region) }}
-          </div>
-        </div>
-      </div>
-      <div class="col-span-1">
-        <span class="text-lg tracking-wide text-purple-400">Foolish</span>
-        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">
-          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 font-thin text-gray-300">
-            {{ splitRegionName(region) }}
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--    <div v-show="sortedWayOfTheHero.length > 0 || sortedFoolish.length > 0" class="grid grid-cols-2 mt-4 gap-4">-->
+    <!--      <div class="col-span-1">-->
+    <!--        <span class="text-lg tracking-wide text-teal-400">Way of the Hero</span>-->
+    <!--        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">-->
+    <!--          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 font-thin text-gray-300">-->
+    <!--            {{ splitRegionName(region) }}-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-span-1">-->
+    <!--        <span class="text-lg tracking-wide text-purple-400">Foolish</span>-->
+    <!--        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">-->
+    <!--          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 font-thin text-gray-300">-->
+    <!--            {{ splitRegionName(region) }}-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <ul v-show="Object.keys(regionHints).length > 0" class="mt-4">
       <li v-for="(hints, region) in regionHints" :key="region" class="mb-2">
