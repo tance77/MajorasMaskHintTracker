@@ -3,7 +3,7 @@
     <div v-show="Object.keys(selectedItem).length < 1">
       <label :for="uniqueLabelId1" class="block font-medium leading-5 text-gray-300">{{ label }}</label>
       <div class="mt-1 rounded-md shadow-sm">
-        <input :id="uniqueLabelId1" v-model="search" class="block w-full p-3 text-gray-300 bg-gray-800 border-2 border-transparent rounded-md focus:border-indigo-600 focus:outline-none placeholder-gray-700" :class="{'rounded-b-none focus:shadow-none': showResults}" :placeholder="placeholder">
+        <input :id="uniqueLabelId1" v-model="search" class="block w-full p-3 text-gray-300 bg-gray-800 border-2 border-transparent rounded-md focus:border-purple-600 focus:outline-none placeholder-gray-700" :class="{'rounded-b-none focus:shadow-none': showResults}" :placeholder="placeholder">
       </div>
       <transition
         enter-class="transform scale-95 opacity-0"
@@ -13,7 +13,7 @@
         leave-active-class="transition duration-75 ease-in"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <div v-show="showResults" v-on-clickaway="away" class="absolute z-10 w-full text-gray-300 bg-gray-800 border-b border-l border-r border-indigo-600 rounded-b shadow-sm">
+        <div v-show="showResults" v-on-clickaway="away" class="absolute z-10 w-full text-gray-300 bg-gray-800 border-b border-l border-r border-purple-600 rounded-b shadow-sm">
           <ul class="overflow-auto" style="max-height: 500px;">
             <li v-for="(item, key) in searchResults" :key="key" class="px-3 py-2 hover:bg-gray-700 cursor-pointer flex items-center`" @click="handleSearchSelect(item)">
               <span class="flex-grow">{{ item.name }}</span>
@@ -29,7 +29,7 @@
     <div v-show="Object.keys(selectedItem).length > 0">
       <label :for="uniqueLabelId2" class="block font-medium leading-5 text-gray-300">{{ label }}</label>
       <div class="relative mt-1 rounded-md shadow-sm select-none">
-        <input :id="uniqueLabelId2" :value="selectedItem.name" class="block w-full p-3 text-indigo-400 bg-gray-700 border-2 border-transparent rounded-md opacity-50 focus:border-indigo-600 focus:outline-none0" disabled>
+        <input :id="uniqueLabelId2" :value="selectedItem.name" class="block w-full p-3 text-purple-400 bg-gray-700 border-2 border-transparent rounded-md opacity-50 focus:border-purple-600 focus:outline-none0" disabled>
         <div v-if="selectedItem.image" class="absolute inset-y-0 right-0 mr-10 flex items-center">
           <img :src="assembleImagePath(selectedItem.image)" class="w-6 h-6">
         </div>

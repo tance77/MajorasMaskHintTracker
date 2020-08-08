@@ -3,7 +3,7 @@
     <div v-show="Object.entries(selectedLocation).length === 0">
       <label :for="uniqueLabelId1" class="block font-medium leading-5 text-gray-300">{{ label }}</label>
       <div class="mt-1 rounded-md shadow-sm">
-        <input :id="uniqueLabelId1" v-model="search" :class="{'rounded-b-none focus:shadow-none': showResults}" :placeholder="placeholder" class="block w-full p-3 text-gray-300 bg-gray-800 border-2 border-transparent rounded-md focus:border-indigo-600 focus:outline-none placeholder-gray-700">
+        <input :id="uniqueLabelId1" v-model="search" :class="{'rounded-b-none focus:shadow-none': showResults}" :placeholder="placeholder" class="block w-full p-3 text-gray-300 bg-gray-800 border-2 border-transparent rounded-md focus:border-purple-600 focus:outline-none placeholder-gray-700">
       </div>
       <transition
         enter-active-class="transition duration-100 ease-out"
@@ -13,7 +13,7 @@
         leave-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <div v-show="showResults" v-on-clickaway="away" class="absolute z-10 w-full text-gray-300 bg-gray-800 border-b border-l border-r border-indigo-600 rounded-b shadow-sm">
+        <div v-show="showResults" v-on-clickaway="away" class="absolute z-10 w-full text-gray-300 bg-gray-800 border-b border-l border-r border-purple-600 rounded-b shadow-sm">
           <ul class="overflow-auto" style="max-height: 500px;">
             <li v-for="(location, key) in searchResults" :key="key" class="px-3 py-2 cursor-pointer hover:bg-gray-700" @click="handleSearchSelect(location)">
               <span v-if="location.name">
@@ -31,7 +31,7 @@
     <div v-show="Object.entries(selectedLocation).length !== 0">
       <label :for="uniqueLabelId2" class="block font-medium leading-5 text-gray-300">{{ label }}</label>
       <div class="relative mt-1 rounded-md shadow-sm">
-        <input :id="uniqueLabelId2" v-model="selectedLocation.name" class="block w-full p-3 text-indigo-400 bg-gray-700 border-2 border-transparent rounded-md opacity-50 focus:border-indigo-600 focus:outline-none" disabled>
+        <input :id="uniqueLabelId2" v-model="selectedLocation.name" class="block w-full p-3 text-purple-400 bg-gray-700 border-2 border-transparent rounded-md opacity-50 focus:border-purple-600 focus:outline-none" disabled>
         <button class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 text-red-400 rounded-tr-lg hover:text-red-600 focus:outline-none" @click="removeSelected">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" fill-rule="evenodd"/>

@@ -47,7 +47,7 @@
         <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
           <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <button type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5" @click="$emit('confirm-delete')">
-              Delete
+              Reset
             </button>
           </span>
           <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
@@ -63,7 +63,7 @@
 
 <script>
   export default {
-    name: "DeleteModal",
+    name: "ResetModal",
     props: {
       open: {type: Boolean, default: false}
     }
