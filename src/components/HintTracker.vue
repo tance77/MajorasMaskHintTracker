@@ -91,8 +91,8 @@
     </ul>
 
 
-    <div v-show="Object.keys(regionHints).length < 1 && selectedWayOfHero.length < 1 && selectedFoolish.length < 1" class="text-sm text-gray-400">
-      Add a hint above to begin...
+    <div v-show="Object.keys(regionHints).length < 1" class="text-sm text-gray-400">
+      Hints added via the text boxes above will appear here...
     </div>
 
     <div class="mt-8 text-right">
