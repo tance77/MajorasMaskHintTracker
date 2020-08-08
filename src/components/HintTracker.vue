@@ -32,19 +32,19 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <div v-for="region in regions" :key="region" class="flex items-center col-span-1">
-        <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>
-        <label class="pr-2"><input
-          v-model="selectedWayOfHero" :value="region" class="text-teal-400 bg-teal-700 border border-teal-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedWayOfHero.includes(region)}"
-          @click="toggleWoth(region, true)"
-        ></label>
-        <label><input
-          v-model="selectedFoolish" :value="region" class="text-purple-400 bg-purple-800 border border-purple-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedFoolish.includes(region)}"
-          @click="toggleWoth(region, false)"
-        ></label>
-      </div>
-    </div>
+    <!--    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">-->
+    <!--      <div v-for="region in regions" :key="region" class="flex items-center col-span-1">-->
+    <!--        <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>-->
+    <!--        <label class="pr-2"><input-->
+    <!--          v-model="selectedWayOfHero" :value="region" class="text-teal-400 bg-teal-700 border border-teal-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedWayOfHero.includes(region)}"-->
+    <!--          @click="toggleWoth(region, true)"-->
+    <!--        ></label>-->
+    <!--        <label><input-->
+    <!--          v-model="selectedFoolish" :value="region" class="text-purple-400 bg-purple-800 border border-purple-400 form-checkbox focus:shadow-none" type="checkbox" :class="{'opacity-25': !selectedFoolish.includes(region)}"-->
+    <!--          @click="toggleWoth(region, false)"-->
+    <!--        ></label>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div class="my-4 text-xl tracking-wide text-gray-300 border-b border-gray-500">
       Known Hints
     </div>
