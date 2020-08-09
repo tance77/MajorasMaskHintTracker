@@ -757,14 +757,14 @@
         this.selectedFoolish = foolishLocations;
       }
     },
-    mounted() {
-      this.regionHints = {};
-      this.items.forEach(item => {
-        this.selectedItem = item;
-        this.selectedLocation = this.locations[Math.floor(Math.random() * this.locations.length)];
-        this.addHint();
-      });
-    },
+    // mounted() {
+    //   this.regionHints = {};
+    //   this.items.forEach(item => {
+    //     this.selectedItem = item;
+    //     this.selectedLocation = this.locations[Math.floor(Math.random() * this.locations.length)];
+    //     this.addHint();
+    //   });
+    // },
     methods: {
       isWOTH(region){
         if(this.selectedWayOfHero.includes(region)){
