@@ -34,7 +34,7 @@
       <div class="text-xl tracking-wide">
         Regions
       </div>
-      <div class="flex ml-2 flex-grow">
+      <div class="flex flex-grow ml-2">
         <div class="flex items-center">
           <div class="inline-flex w-4 h-4 bg-teal-700 border border-teal-400 rounded opacity-25"/>
           <span class="ml-2 text-xs tracking-wider">WOTH</span>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-flow-row lg:grid-flow-col grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-10" style="">
       <div v-for="region in regions" :key="region" class="flex items-center col-span-1">
         <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>
         <label class="pr-2">
@@ -73,32 +73,32 @@
     <div class="my-4 text-xl tracking-wide text-gray-300 border-b border-gray-500">
       Known Hints
     </div>
-    <!--    <div v-show="sortedWayOfTheHero.length > 0 || sortedFoolish.length > 0" class="grid grid-cols-2 mt-4 gap-4">-->
-    <!--      <div class="col-span-1">-->
-    <!--        <span class="text-lg tracking-wide text-teal-400">Way of the Hero</span>-->
-    <!--        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">-->
-    <!--          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 font-thin text-gray-300">-->
-    <!--            {{ splitRegionName(region) }}-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="col-span-1">-->
-    <!--        <span class="text-lg tracking-wide text-purple-400">Foolish</span>-->
-    <!--        <div class="grid grid-cols-2 overflow-y-auto" style="min-height: 100px; max-height: 100px;">-->
-    <!--          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 font-thin text-gray-300">-->
-    <!--            {{ splitRegionName(region) }}-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+    <div v-show="sortedWayOfTheHero.length > 0 || sortedFoolish.length > 0" class="grid grid-cols-1 gap-2 mt-4 lg:grid-cols-2">
+      <div class="col-span-1 p-2 bg-gray-800 rounded">
+        <span class="text-lg tracking-wide text-teal-300 font-semibold">Way of the Hero</span>
+        <div class="grid grid-cols-1 overflow-y-auto ml-4">
+          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 font-thin text-gray-300">
+            {{ splitRegionName(region) }}
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1 p-2 bg-gray-800 rounded">
+        <span class="text-lg tracking-wide text-purple-300 font-semibold">Foolish</span>
+        <div class="grid grid-cols-1 overflow-y-auto ml-4">
+          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 font-thin text-gray-300">
+            {{ splitRegionName(region) }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <div v-show="Object.keys(regionHints).length > 0" class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-2">
-      <div v-for="(hints, region) in regionHints" :key="region" class="p-2 rounded bg-gray-800">
-        <span class="text-lg tracking-wide text-gray-500 font-semibold">{{ splitRegionName(region) }}</span>
+    <div v-show="Object.keys(regionHints).length > 0" class="grid grid-cols-1 gap-2 mt-4 lg:grid-cols-2">
+      <div v-for="(hints, region) in regionHints" :key="region" class="p-2 bg-gray-800 rounded">
+        <span class="text-lg font-semibold tracking-wide text-gray-500">{{ splitRegionName(region) }}</span>
         <div
           v-for="(hint, index) in hints"
           :key="`${hint}-${index}`"
-          class="flex items-center mb-2 ml-4 font-thin text-gray-300 mt-2"
+          class="flex items-center mt-2 mb-2 ml-4 font-thin text-gray-300"
         >
           <span class="col-span-1">{{ hint.locationName }}</span>
           <div class="flex items-center mx-2 text-teal-500">
@@ -111,7 +111,7 @@
             </svg>
           </div>
           <span class="col-span-1 mr-2 font-semibold">{{ hint.item }}</span>
-          <img v-if="hint.image" :src="assembleImagePath(hint.image)" class="mr-2 w-6 h-6">
+          <img v-if="hint.image" :src="assembleImagePath(hint.image)" class="w-6 h-6 mr-2">
           <button
             class="flex items-center text-gray-400 hover:text-red-600 focus:outline-none"
             @click="removeHint(region, hint)"
@@ -129,7 +129,7 @@
     </div>
 
     <div
-      v-show="Object.keys(regionHints).length < 1"
+      v-show="Object.keys(regionHints).length < 1 && sortedWayOfTheHero.length < 1 && sortedFoolish.length < 1"
       class="text-sm text-gray-400"
     >
       Hints added via the text boxes above will appear here...
@@ -645,7 +645,7 @@
           {name: "Swamp Spider House Reward", region: "SouthernSwamp"},
           {name: "Swamp Tourist Center Roof", region: "SouthernSwamp"},
           {name: "Swordsman's School", region: "WestClockTown"},
-          {name: "Termina Field Grass Chest",region: "TerminaField"}, 
+          {name: "Termina Field Grass Chest",region: "TerminaField"},
           {name: "Termina Field Grass Grotto", region: "TerminaField"},
           {name: "Termina Field Pillar Grotto", region: "TerminaField"},
           {name: "Termina Field Stump Chest", region: "TerminaField"},
@@ -655,7 +655,7 @@
           {name: "Toilet Hand", region: "StockPotInn"},
           {name: "Town Archery #1", region: "EastClockTown"},
           {name: "Town Archery #2", region: "EastClockTown"},
-          {name: "Town Great Fairy Non-Human",region: "NorthClockTown"}, 
+          {name: "Town Great Fairy Non-Human",region: "NorthClockTown"},
           {name: "Town Great Fairy", region: "NorthClockTown"},
           {name: "Trading Post 10 Deku Nuts", region: "WestClockTown"},
           {name: "Trading Post 30 Arrows", region: "WestClockTown"},
@@ -665,7 +665,7 @@
           {name: "Trading Post Green Potion", region: "WestClockTown"},
           {name: "Trading Post Hero's Shield", region: "WestClockTown"},
           {name: "Trading Post Red Potion", region: "WestClockTown"},
-          {name: "Treasure Chest Game Deku",region: "EastClockTown"}, 
+          {name: "Treasure Chest Game Deku",region: "EastClockTown"},
           {name: "Treasure Chest Game Goron", region: "EastClockTown"},
           {name: "Treasure Chest Game Human", region: "EastClockTown"},
           {name: "Treasure Chest Game Zora", region: "EastClockTown"},
@@ -674,7 +674,7 @@
           {name: "Twinmold Heart Container", region: "StoneTowerTemple"},
           {name: "Well Left Path Chest", region: "BeneathTheWell"},
           {name: "Well Right Path Chest", region: "BeneathTheWell"},
-          {name: "Witch Shop Blue Potion",region: "SouthernSwamp"}, 
+          {name: "Witch Shop Blue Potion",region: "SouthernSwamp"},
           {name: "Witch Shop Green Potion", region: "SouthernSwamp"},
           {name: "Witch Shop Red Potion", region: "SouthernSwamp"},
           {name: "Woodfall Boss Key Chest", region: "WoodfallTemple"},
@@ -684,7 +684,7 @@
           {name: "Woodfall Dark Room", region: "WoodfallTemple"},
           {name: "Woodfall Deku Baba", region: "WoodfallTemple"},
           {name: "Woodfall Entrance Fairy", region: "WoodfallTemple"},
-          {name: "Woodfall Entrance Platform",region: "WoodfallTemple"}, 
+          {name: "Woodfall Entrance Platform",region: "WoodfallTemple"},
           {name: "Woodfall Great Fairy", region: "Woodfall"},
           {name: "Woodfall Jar Fairy", region: "WoodfallTemple"},
           {name: "Woodfall Main Room Bubble", region: "WoodfallTemple"},
@@ -693,7 +693,7 @@
           {name: "Woodfall Map Purchase", region: "RoadToSouthernSwamp"},
           {name: "Woodfall Platform Room Hive", region: "WoodfallTemple"},
           {name: "Woodfall Poison Water Bubble", region: "WoodfallTemple"},
-          {name: "Woodfall Pre-Boss Lower Right Bubble", region: "WoodfallTemple"}, 
+          {name: "Woodfall Pre-Boss Lower Right Bubble", region: "WoodfallTemple"},
           {name: "Woodfall Pre-Boss Pillar Bubble", region: "WoodfallTemple"},
           {name: "Woodfall Pre-Boss Upper Left Bubble", region: "WoodfallTemple"},
           {name: "Woodfall Pre-Boss Upper Right Bubble", region: "WoodfallTemple"},
@@ -702,7 +702,7 @@
           {name: "Zora Cape Grotto", region: "ZoraCape"},
           {name: "Zora Cape Ledge With Tree Chest", region: "ZoraCape"},
           {name: "Zora Cape Ledge Without Tree Chest", region: "ZoraCape"},
-          {name: "Zora Cape Like-Like", region: "ZoraCape"}, 
+          {name: "Zora Cape Like-Like", region: "ZoraCape"},
           {name: "Zora Cape Underwater Chest", region: "ZoraCape"},
           {name: "Zora Hall Stage Lights", region: "ZoraHall"},
           {name: "Zora Shop 10 Arrows", region: "ZoraHall"},
