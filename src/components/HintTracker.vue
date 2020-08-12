@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-flow-row lg:grid-flow-col grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-10" style="">
+    <div class="grid grid-flow-row md:grid-flow-col grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-10 md:grid-rows-20" style="">
       <div v-for="region in regions" :key="region" class="flex items-center col-span-1">
         <span class="w-3/4 text-gray-300">{{ splitRegionName(region) }}</span>
         <label class="pr-2">
@@ -74,18 +74,18 @@
       Known Hints
     </div>
     <div v-show="sortedWayOfTheHero.length > 0 || sortedFoolish.length > 0" class="grid grid-cols-1 gap-2 mt-4 lg:grid-cols-2">
-      <div class="col-span-1 p-2 bg-gray-800 rounded">
+      <div class="col-span-1 p-2 bg-teal-500 bg-opacity-25 rounded">
         <span class="text-lg tracking-wide text-teal-300 font-semibold">Way of the Hero</span>
         <div class="grid grid-cols-1 overflow-y-auto ml-4">
-          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 font-thin text-gray-300">
+          <div v-for="region in sortedWayOfTheHero" :key="`woth-${region}`" class="col-span-1 text-gray-300">
             {{ splitRegionName(region) }}
           </div>
         </div>
       </div>
-      <div class="col-span-1 p-2 bg-gray-800 rounded">
+      <div class="col-span-1 p-2 bg-purple-500 bg-opacity-25 rounded">
         <span class="text-lg tracking-wide text-purple-300 font-semibold">Foolish</span>
         <div class="grid grid-cols-1 overflow-y-auto ml-4">
-          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 font-thin text-gray-300">
+          <div v-for="region in sortedFoolish" :key="`foolish-${region}`" class="col-span-1 text-gray-300">
             {{ splitRegionName(region) }}
           </div>
         </div>
